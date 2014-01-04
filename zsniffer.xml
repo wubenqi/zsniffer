@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<XMLIni>
+ <Section name="MapPath">
+  <Item name="Path">F:/mywork2/jianxian2/proto/proto/common</Item>
+  <Item name="Path">F:/mywork2/jianxian2/proto/proto/server</Item>
+ </Section>
+
+ <Section name="System">
+  <Item name="message_types_proto">const_message_types.proto</Item>
+  <Item name="cap_port">4023</Item>
+  <Item name="encoding">gbk</Item>
+ </Section>
+</XMLIni>
