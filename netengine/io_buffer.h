@@ -96,65 +96,6 @@ public:
 
 	void release();
 
-	IOBuffer* Clone();
-
-	//>>====================================================================================
-	// 读
-	bool ReadRaw(void* buf, int buf_len, bool is_peek = false);
-	bool ReadUint8(uint8* val, bool is_peek = false);
-
-	// 大端
-	bool ReadBigEndianUint16(uint16* val, bool is_peek = false);
-	bool ReadBigEndianUint24(uint32* val, bool is_peek = false);
-	bool ReadBigEndianUint32(uint32* val, bool is_peek = false);
-
-	// 小端
-	bool ReadLittleEndianUint16(uint16* val, bool is_peek = false);
-	bool ReadLittleEndianUint24(uint32* val, bool is_peek = false);
-	bool ReadLittleEndianUint32(uint32* val, bool is_peek = false);
-
-	// offset
-	bool ReadOffsetRaw(void* buf, int offset, int buf_len);
-	bool ReadOffsetUint8(uint8* val, int offset);
-
-	// 大端
-	bool ReadOffsetBigEndianUint16(uint16* val, int offset);
-	bool ReadOffsetBigEndianUint24(uint32* val, int offset);
-	bool ReadOffsetBigEndianUint32(uint32* val, int offset);
-
-	// 小端
-	bool ReadOffsetLittleEndianUint16(uint16* val, int offset);
-	bool ReadOffsetLittleEndianUint24(uint32* val, int offset);
-	bool ReadOffsetLittleEndianUint32(uint32* val, int offset);
-
-	// 写
-	bool WriteRaw(const void* buf, int buf_len);
-	bool WriteUint8(uint8 val);
-
-	// 大端
-	bool WriteBigEndianUint16(uint16 val);
-	bool WriteBigEndianUint24(uint32 val);
-	bool WriteBigEndianUint32(uint32 val);
-
-	// 小端
-	bool WriteLittleEndianUint16(uint16 val);
-	bool WriteLittleEndianUint24(uint32 val);
-	bool WriteLittleEndianUint32(uint32 val);
-
-	// offset
-	bool WriteOffsetRaw(const void* buf, int buf_len, int offset);
-	bool WriteOffsetUint8(uint8 val, int offset);
-
-	// 大端
-	bool WriteOffsetBigEndianUint16(uint16 val, int offset);
-	bool WriteOffsetBigEndianUint24(uint32 val, int offset);
-	bool WriteOffsetBigEndianUint32(uint32 val, int offset);
-
-	// 小端
-	bool WriteOffsetLittleEndianUint16(uint16 val, int offset);
-	bool WriteOffsetLittleEndianUint24(uint32 val, int offset);
-	bool WriteOffsetLittleEndianUint32(uint32 val, int offset);
-
 private:
 	uint8* data_;
 
@@ -165,81 +106,6 @@ private:
 	int inited_size_;	
 };
 
-
-namespace base {
-inline void ReadBigEndianUint8(const void* buf, uint8* out) {
-	*out = static_cast<const uint8*>(buf)[0];
-}
-
-inline void ReadBigEndianUint16(const void* buf, uint16* out) {
-	*out = static_cast<const uint8*>(buf)[0];
-	*out <<= 8;
-	*out |= static_cast<const uint8*>(buf)[1];
-}
-
-inline void ReadBigEndianUint24(const void* buf, uint16* out) {
-	*out = static_cast<const uint8*>(buf)[0];
-
-	*out <<= 8;
-	*out |= static_cast<const uint8*>(buf)[1];
-
-	*out <<= 8;
-	*out |= static_cast<const uint8*>(buf)[2];
-}
-
-inline void ReadBigEndianUint32(const void* buf, uint32* out) {
-	*out = static_cast<const uint8*>(buf)[0];
-	
-	*out <<= 8;
-	*out |= static_cast<const uint8*>(buf)[1];
-
-	*out <<= 8;
-	*out |= static_cast<const uint8*>(buf)[2];
-
-	*out <<= 8;
-	*out |= static_cast<const uint8*>(buf)[3];
-
-}
-
-inline void WriteBigEndianUint8(void* buf, uint8 val) {
-	static_cast<uint8*>(buf)[0] = val;
-}
-
-inline void WriteBigEndianUint16(void* buf, uint16 val) {
-	static_cast<uint8*>(buf)[1] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-
-	static_cast<uint8*>(buf)[0] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-}
-
-inline void WriteBigEndianUint24(void* buf, uint32 val) {
-	static_cast<uint8*>(buf)[2] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-
-	static_cast<uint8*>(buf)[1] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-
-	static_cast<uint8*>(buf)[0] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-}
-
-inline void WriteBigEndianUint32(void* buf, uint32 val) {
-	static_cast<uint8*>(buf)[3] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-
-	static_cast<uint8*>(buf)[2] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-
-	static_cast<uint8*>(buf)[1] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-
-	static_cast<uint8*>(buf)[0] = static_cast<uint8>(val & 0xFF);;
-	val >>= 8;
-}
-
-}
-
 #define CHECK_IOBUFFER_READABLE(io_buffer, size) \
 do { \
     if((size) > (io_buffer).read_remaining()) { \
@@ -247,6 +113,5 @@ do { \
         return false; \
     } \
 }while(0)
-
 
 #endif  // NET_BASE_IO_BUFFER_H_
